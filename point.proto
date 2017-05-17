@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+message Point {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message SetGoalRequest {
+  Point position = 1;
+}
+
+message SetGoalResponse {}
+
+message WatchRequest {
+  string name = 1;
+}
+
+message WatchResponse {
+  string name = 1;
+  Point position = 2;
+  bool score = 3;
+}
+
+message MoveRequest {
+  string name = 1;
+  Point delta = 2;
+}
+
+message MoveResponse {}
+
+message ChatRequest {
+  string name = 1;
+  string msg = 2;
+}
+
+message ChatResponse {
+  string name = 1;
+  string msg = 2;
+}
+
+service Game {
+  rpc SetGoal (SetGoalRequest) returns (SetGoalResponse);
+  rpc Watch (WatchRequest) returns (stream WatchResponse);
+  rpc Move (stream MoveRequest) returns (MoveResponse);
+  rpc Chat (stream ChatRequest) returns (stream ChatResponse);
+}
